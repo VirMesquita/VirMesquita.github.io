@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init("WV0udxzmeQByl5PSk");</script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Virgilio da Silva Mesquita — System Administrator</title>
@@ -702,11 +704,11 @@
     </p>
     <div class="hero-btns" data-lang="en">
       <a href="#contact" class="btn btn-primary">Hire Me</a>
-      <a href="#" class="btn btn-secondary" onclick="alert('CV coming soon!')">Download CV</a>
+      <a href="CV_Virgilio.pdf" download class="btn btn-secondary">Download CV</a>
     </div>
     <div class="hero-btns" data-lang="id">
       <a href="#contact" class="btn btn-primary">Hubungi Saya</a>
-      <a href="#" class="btn btn-secondary" onclick="alert('CV segera tersedia!')">Unduh CV</a>
+      <a href="CV_Virgilio.pdf" download class="btn btn-secondary">Unduh CV</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -1079,9 +1081,18 @@ function sendMail() {
     alert(lang === 'en' ? 'Please fill in all fields.' : 'Harap isi semua kolom.');
     return;
   }
-  const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
-  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`);
-  window.location.href = `mailto:your.email@example.com?subject=${subject}&body=${body}`;
+  emailjs.send("service_uidhq5q", "template_9au7qkb", {
+    name: name,
+    email: email,
+    message: msg
+  }).then(() => {
+    alert(lang === 'en' ? 'Message sent successfully!' : 'Pesan berhasil dikirim!');
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-email').value = '';
+    document.getElementById('f-msg').value = '';
+  }).catch(() => {
+    alert(lang === 'en' ? 'Failed to send. Please try again.' : 'Gagal kirim. Coba lagi.');
+  });
 }
 
 // ─── SCROLL REVEAL ───
